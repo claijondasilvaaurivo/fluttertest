@@ -9,8 +9,8 @@ const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
 class AuthenticationCall {
   static Future<ApiCallResponse> call({
-    String? username = '',
     String? password = '',
+    String? email = '',
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'Authentication',
@@ -18,7 +18,7 @@ class AuthenticationCall {
       callType: ApiCallType.POST,
       headers: {},
       params: {
-        'name': username,
+        'email': email,
         'password': password,
       },
       bodyType: BodyType.X_WWW_FORM_URL_ENCODED,

@@ -30,8 +30,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
     super.initState();
     _model = createModel(context, () => LoginPageModel());
 
-    _model.usernameTextController ??= TextEditingController();
-    _model.usernameFocusNode ??= FocusNode();
+    _model.emailTextController ??= TextEditingController();
+    _model.emailFocusNode ??= FocusNode();
 
     _model.passwordTextController ??= TextEditingController();
     _model.passwordFocusNode ??= FocusNode();
@@ -187,13 +187,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.usernameTextController,
-                                  focusNode: _model.usernameFocusNode,
+                                  controller: _model.emailTextController,
+                                  focusNode: _model.emailFocusNode,
                                   autofocus: true,
                                   autofillHints: const [AutofillHints.email],
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText: 'Username',
+                                    labelText: 'Email',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .labelLarge
                                         .override(
@@ -243,8 +243,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                                         letterSpacing: 0.0,
                                       ),
                                   keyboardType: TextInputType.emailAddress,
-                                  validator: _model
-                                      .usernameTextControllerValidator
+                                  validator: _model.emailTextControllerValidator
                                       .asValidator(context),
                                 ),
                               ),
@@ -338,8 +337,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                                 onPressed: () async {
                                   _model.apiResultisw =
                                       await AuthenticationCall.call(
-                                    username:
-                                        _model.usernameTextController.text,
+                                    email: _model.emailTextController.text,
                                     password:
                                         _model.passwordTextController.text,
                                   );
