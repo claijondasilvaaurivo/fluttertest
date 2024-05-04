@@ -346,54 +346,35 @@ class _LoginPageWidgetState extends State<LoginPageWidget>
                                     GoRouter.of(context).prepareAuthEvent();
                                     await authManager.signIn(
                                       authenticationToken:
-                                          AuthenticationCall.jwt(
+                                          AuthenticationCall.accesstoken(
+                                        (_model.apiResultisw?.jsonBody ?? ''),
+                                      ),
+                                      refreshToken:
+                                          AuthenticationCall.refreshtoken(
                                         (_model.apiResultisw?.jsonBody ?? ''),
                                       ),
                                       userData: UserStruct(
                                         uid: currentUserUid,
                                       ),
                                     );
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          title: const Text('api response'),
-                                          content: Text(
-                                              (_model.apiResultisw?.jsonBody ??
-                                                      '')
-                                                  .toString()),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: const Text('Ok'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
 
                                     context.pushNamedAuth(
                                         'HomePage', context.mounted);
                                   } else {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          title: const Text('api response'),
-                                          content: Text(
-                                              (_model.apiResultisw?.jsonBody ??
-                                                      '')
-                                                  .toString()),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: const Text('Ok'),
-                                            ),
-                                          ],
-                                        );
-                                      },
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Login Failed, try again',
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
+                                        ),
+                                        duration: const Duration(milliseconds: 4000),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondary,
+                                      ),
                                     );
                                   }
 

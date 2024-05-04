@@ -12,16 +12,22 @@ class AuthenticationCall {
     String? password = '',
     String? email = '',
   }) async {
+    final ffApiRequestBody = '''
+{
+  "email": "$email",
+  "password": "$password"
+}''';
     return ApiManager.instance.makeApiCall(
       callName: 'Authentication',
-      apiUrl: 'https://x8ki-letl-twmt.n7.xano.io/api:vp6_NWDS/auth/login',
+      apiUrl: 'https://api.claijon.com/login',
       callType: ApiCallType.POST,
-      headers: {},
-      params: {
-        'email': email,
-        'password': password,
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
       },
-      bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
@@ -33,6 +39,24 @@ class AuthenticationCall {
   static String? jwt(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.authToken''',
+      ));
+  static String? tokentype(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.tokenType''',
+      ));
+  static String? accesstoken(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.accessToken''',
+      ));
+  static int? expiretime(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.expiresIn''',
+      ));
+  static String? refreshtoken(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.refreshToken''',
       ));
 }
 
